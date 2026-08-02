@@ -66,39 +66,59 @@ curl -X PATCH http://localhost:5001//projects/Project_id_here/members/users_id_h
 
 
 
+# create task
+curl -X POST http://localhost:5001/tasks \
+-H "Authorization: Bearer your_token_here" \
+-H "Content-Type: application/json" \
+-d '{"project_id": 1, "title": "My first task", "priority": "high"}'
+
+
+#  get all tasks
+curl -X GET "http://localhost:5001/tasks?project_id=1" \
+-H "Authorization: Bearer your_token"
+
+# get specific task
+curl -X GET http://localhost:5001/tasks/1 \
+-H "Authorization: Bearer your_token"
+
+# update task
+curl -X PUT http://localhost:5001/tasks/1 \
+-H "Authorization: Bearer your_token" \
+-H "Content-Type: application/json" \
+-d '{"title": "Updated title", "priority": "low"}'
+
+# change status
+curl -X PATCH http://localhost:5001/tasks/1/status \
+-H "Authorization: Bearer your_token" \
+-H "Content-Type: application/json" \
+-d '{"status": "in_progress"}'
+
+
 # testing
 
-curl -X PATCH http://localhost:5001/projects/1/members/2/role \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDMxOTY0NSwianRpIjoiMDQ5ODZiMDAtYTIzOC00NTdmLTliOWUtMzlhYjI5NjQwZWFjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODQzMTk2NDUsImNzcmYiOiJjMWI2ZWI1ZC00NTkyLTQ5MmMtYjQyMy04NTEwMTcyNmExYTAiLCJleHAiOjE3ODQzMjA1NDV9.UJoY179r2vJrvO-59W1h52c1HDOhsT9ngPeyRdyuGD4" \
--H "Content-Type: application/json" \
--d '{"role":"admnn"}'
-
-
-
-curl -X PUT http://localhost:5001/users/me \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDI4Mzc1NSwianRpIjoiMGQ2ODFmNzUtYWE3NC00YmQ3LTk1NzQtMjk2NzdiMWU0NjNmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODQyODM3NTUsImNzcmYiOiI5MDBiZDNlMi05ZjNkLTQzOWQtYjg1ZS03Yzg0ZTZmMjVmYTUiLCJleHAiOjE3ODQyODQ2NTV9.XZpQicZUux-LwvkB84KM5yh1bn54stnMhdZ8kp33nE8" \
-  -H "Content-Type: application/json" \
-  -d '{"email": "afifffff@test.com"}'
-
-
- curl -X POST http://localhost:5001/projects \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDI4ODEyNCwianRpIjoiMzFiNjQyZDAtZWZmMC00M2ViLTk2NTMtN2M5MDM5MjNiZDgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODQyODgxMjQsImNzcmYiOiI3Mzk4NmM3NC1jNjIzLTQ1YTktYTJiNS1iNmRkNTllYWZjNTEiLCJleHAiOjE3ODQyODkwMjR9.tv9rn-3EuQAg0OgZ-6T-bekXWQ_A-M-ogrlbpoYM5CA" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "sellervaiiii","description":"this is sellervai"}'
-
    curl -X POST http://localhost:5001/auth/refresh \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDI4Mzc1NSwianRpIjoiYjE4OTVlYzAtNzRlMy00NDg3LWJjNjktZTdkNzZkYmQzYzEwIiwidHlwZSI6InJlZnJlc2giLCJzdWIiOiIxIiwibmJmIjoxNzg0MjgzNzU1LCJjc3JmIjoiNTMwMmVhNWMtMDQ4Yi00NjU2LTlkMzYtZTQwZWUxMzU4YWM5IiwiZXhwIjoxNzg2ODc1NzU1fQ.PmyMq4IbouxE_TviET-O-ly5fOVoKCDN67EMYx3PP6k"
-
-  curl -X GET http://localhost:5001/projects \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDI4OTI0MCwianRpIjoiMzM1YTczN2ItN2RjZi00ZGI0LTlkNTctZjIzZTBlZmQxZGI1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODQyODkyNDAsImNzcmYiOiJiMzQxOGJjNC1kMzQ2LTQwY2UtODdiYy1jMmU5Yzk0NTcxNWIiLCJleHAiOjE3ODQyOTAxNDB9.QO2qhkWsQejbjsfRd1ZfCaRgZfjyP9qELtw0GNJR0TI" \
-  -H "Content-Type: application/json"
-
-    curl -X GET http://localhost:5001/projects/1 \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDI4OTI0MCwianRpIjoiMzM1YTczN2ItN2RjZi00ZGI0LTlkNTctZjIzZTBlZmQxZGI1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODQyODkyNDAsImNzcmYiOiJiMzQxOGJjNC1kMzQ2LTQwY2UtODdiYy1jMmU5Yzk0NTcxNWIiLCJleHAiOjE3ODQyOTAxNDB9.QO2qhkWsQejbjsfRd1ZfCaRgZfjyP9qELtw0GNJR0TI" \
-  -H "Content-Type: application/json"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNTA4NWNkYjktOWE5Yy00MDVhLWI4MGEtYjczZTIyODExMjExIiwidHlwZSI6InJlZnJlc2giLCJzdWIiOiIzIiwibmJmIjoxNzg1NjQ2OTkyLCJjc3JmIjoiMmYyYWY0OTktODhiYS00MTRkLWE0YzEtZjYwMDM2YjVhMjRkIiwiZXhwIjoxNzg4MjM4OTkyfQ._X031wbkj2nPkU7QHXfls7pa7dt-0Zj87CY0xFXTrzI"
 
 
-  curl -X POST http://localhost:5001/projects/join \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NDMxNTc2MiwianRpIjoiM2Y3ZmIzZGUtNjcxZS00NTFlLTk1ZWItMThkMjdiNzFhNTNjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3ODQzMTU3NjIsImNzcmYiOiJkY2E5ZWMwMy1kZTEwLTQxMDQtOGQ0ZS00MWVmNTQ2NjljZmMiLCJleHAiOjE3ODQzMTY2NjJ9.33h4wa5x8316BxuJs3lQtwHOopPOlgeJ3CKVsd6yXsM" \
+
+
+curl -X POST http://localhost:5001/tasks \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0ODAxMiwianRpIjoiYzYzNzk5NzgtYTYwYi00NjEwLTljNjItZGJjMTU0ZjQ3ODA3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDgwMTIsImNzcmYiOiJiOGJkZWI5NC1lNDVkLTQ5MTgtYjBjNC0xYzgzOTAzM2VmOTgiLCJleHAiOjE3ODU2NDg5MTJ9.YpywjrZgwaZMSzz9kHi771Ij7l6ltk7MZWh5074zU4Q" \
+-H "Content-Type: application/json" \
+-d '{"project_id": 1, "title": "My fourth task", "priority": "high", "assigned_to":1}'
+
+
+
+curl -X POST http://localhost:5001/projects/join \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTYwOTQxMiwianRpIjoiOTU1NjU4MDItM2RjMy00NWQ2LWFmNjYtODg4NDI4MThhOThiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2MDk0MTIsImNzcmYiOiI0OGFkNzBkYi1jMGM0LTQxOWMtOWE1Ny1jMTQ1MWRjMzZlOTMiLCJleHAiOjE3ODU2MTAzMTJ9.AFGzsv9R7OKaHrnu7sCyqx5oam2GIRccq-JGOvSj8es" \
 -H "Content-TYpe: application/json" \
 -d '{"join_code":"048818c8bcab"}'
+
+curl -X GET "http://localhost:5001/tasks?project_id=1" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"
+
+curl -X GET http://localhost:5001/tasks/1 \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"
+
+curl -X DELETE http://localhost:5001/tasks/1 \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"

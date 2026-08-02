@@ -4,7 +4,7 @@ from db import conn
 from psycopg2.extras import RealDictCursor
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, get_jwt_identity
 import secrets
-
+from tasks import tasks_bp
 
 from dotenv import load_dotenv
 import os
@@ -15,6 +15,8 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+app.register_blueprint(tasks_bp)
+
 
 jwt = JWTManager(app)
 
@@ -375,6 +377,7 @@ def update_member_role(project_id,target_user_id):
     (newRole, project_id, target_user_id))
 
     conn.commit()
+    cursor.close()
     return jsonify ({"message":"successfully changed role"}),200
 
     
