@@ -1,5 +1,5 @@
 # connect to db
-psql -U afif -d taskflowdb
+  psql -U afif -d taskflowdb
 
 # data database in sql file
 pg_dump -U afif taskflowdb > backup.sql
@@ -94,6 +94,22 @@ curl -X PATCH http://localhost:5001/tasks/1/status \
 -d '{"status": "in_progress"}'
 
 
+# add comment
+curl -X POST http://localhost:5001/comments \
+-H "Authorization: Bearer your_token" \
+-H "Content-Type: application/json" \
+-d '{"task_id": 1, "content": "This is a comment"}'
+
+
+# get comments of a task
+curl -X GET "http://localhost:5001/comments?task_id=1" \
+-H "Authorization: Bearer your_token"
+
+# delete a comment
+curl -X DELETE http://localhost:5001/comments/1 \
+-H "Authorization: Bearer your_token"
+
+
 # testing
 
    curl -X POST http://localhost:5001/auth/refresh \
@@ -101,24 +117,13 @@ curl -X PATCH http://localhost:5001/tasks/1/status \
 
 
 
-
-curl -X POST http://localhost:5001/tasks \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0ODAxMiwianRpIjoiYzYzNzk5NzgtYTYwYi00NjEwLTljNjItZGJjMTU0ZjQ3ODA3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDgwMTIsImNzcmYiOiJiOGJkZWI5NC1lNDVkLTQ5MTgtYjBjNC0xYzgzOTAzM2VmOTgiLCJleHAiOjE3ODU2NDg5MTJ9.YpywjrZgwaZMSzz9kHi771Ij7l6ltk7MZWh5074zU4Q" \
+curl -X POST http://localhost:5001/comments \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY2NDQ5OCwianRpIjoiNTkyZGMyODMtY2MxNS00MTUzLTk0OWQtN2ZhYWViOTJjNzhkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NjQ0OTgsImNzcmYiOiJiY2M0YjNkOS0zOTE5LTRiY2EtYWZhMy05NjY0YTQwYWU2YWMiLCJleHAiOjE3ODU2NjUzOTh9.BPtLicpQ6bT4bHQD5EzigMA4UatF2kLDfja84ycf-X8" \
 -H "Content-Type: application/json" \
--d '{"project_id": 1, "title": "My fourth task", "priority": "high", "assigned_to":1}'
+-d '{"task_id": 3, "content": "This is first comment in task 3"}'
 
+curl -X GET "http://localhost:5001/comments?task_id=3" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY2NDQ5OCwianRpIjoiNTkyZGMyODMtY2MxNS00MTUzLTk0OWQtN2ZhYWViOTJjNzhkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NjQ0OTgsImNzcmYiOiJiY2M0YjNkOS0zOTE5LTRiY2EtYWZhMy05NjY0YTQwYWU2YWMiLCJleHAiOjE3ODU2NjUzOTh9.BPtLicpQ6bT4bHQD5EzigMA4UatF2kLDfja84ycf-X8"
 
-
-curl -X POST http://localhost:5001/projects/join \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTYwOTQxMiwianRpIjoiOTU1NjU4MDItM2RjMy00NWQ2LWFmNjYtODg4NDI4MThhOThiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2MDk0MTIsImNzcmYiOiI0OGFkNzBkYi1jMGM0LTQxOWMtOWE1Ny1jMTQ1MWRjMzZlOTMiLCJleHAiOjE3ODU2MTAzMTJ9.AFGzsv9R7OKaHrnu7sCyqx5oam2GIRccq-JGOvSj8es" \
--H "Content-TYpe: application/json" \
--d '{"join_code":"048818c8bcab"}'
-
-curl -X GET "http://localhost:5001/tasks?project_id=1" \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"
-
-curl -X GET http://localhost:5001/tasks/1 \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"
-
-curl -X DELETE http://localhost:5001/tasks/1 \
--H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY0Njk5MiwianRpIjoiNjdiODQ4ZmItMDhjOS00MDVhLTgxMzQtMjQyMGJjNGNhMGJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NDY5OTIsImNzcmYiOiI1MDk4N2NjMy1jN2NjLTQ1ZTMtODE3ZS0wODM3YTJiYzhmODEiLCJleHAiOjE3ODU2NDc4OTJ9.tCF9cbj7IQCRVHp5vnIqjK25MCf8RogOdN2cHze9hZA"
+curl -X DELETE http://localhost:5001/comments/2 \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NTY2NDQ5OCwianRpIjoiNTkyZGMyODMtY2MxNS00MTUzLTk0OWQtN2ZhYWViOTJjNzhkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODU2NjQ0OTgsImNzcmYiOiJiY2M0YjNkOS0zOTE5LTRiY2EtYWZhMy05NjY0YTQwYWU2YWMiLCJleHAiOjE3ODU2NjUzOTh9.BPtLicpQ6bT4bHQD5EzigMA4UatF2kLDfja84ycf-X8"
